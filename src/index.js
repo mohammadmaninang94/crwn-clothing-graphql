@@ -10,6 +10,8 @@ import { ApolloClient } from 'apollo-boost';
 
 import { store, persistor } from './redux/store';
 
+import { resolvers, typeDefs } from './graphql/resolvers';
+
 import './index.css';
 import App from './App';
 
@@ -21,7 +23,15 @@ const cache = new InMemoryCache();
 
 const client = new ApolloClient({
   link: httpLink,
-  cache
+  cache,
+  typeDefs,
+  resolvers
+});
+
+client.writeData({
+  data: {
+    cartHidden: true
+  }
 });
 
 ReactDOM.render(
