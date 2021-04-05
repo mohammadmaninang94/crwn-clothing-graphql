@@ -10,7 +10,8 @@ import { ApolloClient } from 'apollo-boost';
 
 import { store, persistor } from './redux/store';
 
-import { resolvers, typeDefs } from './graphql/resolvers';
+import resolvers from './graphql/resolvers';
+import typeDefs from './graphql/typeDefs';
 
 import './index.css';
 import App from './App';
@@ -30,7 +31,9 @@ const client = new ApolloClient({
 
 client.writeData({
   data: {
-    cartHidden: true
+    cartHidden: true,
+    cartItems: [],
+    cartItemsCount: 0
   }
 });
 

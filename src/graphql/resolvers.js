@@ -1,18 +1,9 @@
-import { gql } from 'apollo-boost';
+import { addItemToCart, getCartItemsCount } from './cart.utils';
 
-export const typeDefs = gql`
-    extend type Mutation {
-        ToggleCartHidden: Boolean!
-    }
-`;
+import { GET_CART_HIDDEN, GET_CART_ITEMS, GET_CART_ITEMS_COUNT } from './query-constants';
 
-const GET_CART_HIDDEN = gql`
-    {
-        cartHidden @client
-    }
-`;
 
-export const resolvers = {
+const resolvers = {
     Mutation: {
         toggleCartHidden: (_root, _args, { cache }) => {
             const { cartHidden } = cache.readQuery({
@@ -25,6 +16,28 @@ export const resolvers = {
             });
 
             return !cartHidden;
+        },
+
+        addItemToCart: (_root, { item }, { cache }) => {
+            const { cartItems } = cache.readQuery({
+                query: GET_CART_ITEMS
+            });
+
+            const newCartItems = addItemToCart(cartItems, item);
+
+            cache.writeQuery({
+                query: GET_CART_ITEMS_COUNT,
+                data: { cartItemsCount: getCartItemsCount(newCartItems) }
+            });
+
+            cache.writeQuery({
+                query: GET_CART_ITEMS,
+                data: { cartItems: newCartItems }
+            });
+
+            return newCartItems;
         }
     }
 };
+
+export default resolvers;

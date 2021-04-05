@@ -20,19 +20,16 @@ const GET_COLLECTION_BY_TITLE = gql`
     }
 `;
 
-const CollectionPageContainer = ({ match }) => {
-    console.log(match.params.collectionId);
-    return (
-        <Query query={GET_COLLECTION_BY_TITLE}
-            variables={{ title: match.params.collectionId }}>
-            {({ loading, data }) => {
-                if (loading) return <Spinner />;
-                console.log({ data });
-                const { getCollectionsByTitle } = data;
-                return <CollectionPage collection={getCollectionsByTitle} />;
-            }}
-        </Query>
-    )
-};
+const CollectionPageContainer = ({ match }) => (
+    <Query query={GET_COLLECTION_BY_TITLE}
+        variables={{ title: match.params.collectionId }}>
+        {({ loading, data }) => {
+            if (loading) return <Spinner />;
+            console.log({ data });
+            const { getCollectionsByTitle } = data;
+            return <CollectionPage collection={getCollectionsByTitle} />;
+        }}
+    </Query>
+);
 
 export default CollectionPageContainer;
