@@ -17,3 +17,16 @@ export const GET_CART_ITEMS_COUNT = gql`
         cartItemsCount @client
     }
 `;
+
+export const GET_CART_TOTAL = gql`
+    {
+        cartTotal @client
+    }
+`;
+
+export const GET_CART_ITEMS_AND_TOTAL = gql`
+    {
+        cartItems @client
+        cartTotal @client
+    }
+`;

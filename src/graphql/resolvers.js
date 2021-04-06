@@ -1,6 +1,7 @@
-import { addItemToCart, getCartItemsCount } from './cart.utils';
+import { addItemToCart, getCartItemsCount, getCartTotal } from './cart.utils';
 
-import { GET_CART_HIDDEN, GET_CART_ITEMS, GET_CART_ITEMS_COUNT } from './query-constants';
+import { GET_CART_HIDDEN, GET_CART_ITEMS, 
+    GET_CART_ITEMS_COUNT, GET_CART_TOTAL } from './query-constants';
 
 
 const resolvers = {
@@ -28,6 +29,11 @@ const resolvers = {
             cache.writeQuery({
                 query: GET_CART_ITEMS_COUNT,
                 data: { cartItemsCount: getCartItemsCount(newCartItems) }
+            });
+
+            cache.writeQuery({
+                query: GET_CART_TOTAL,
+                data: { cartTotal: getCartTotal(newCartItems) }
             });
 
             cache.writeQuery({
